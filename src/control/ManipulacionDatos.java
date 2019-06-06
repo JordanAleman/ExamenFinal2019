@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import modelo.Cuenta;
+import modelo.Movimiento;
 import modelo.Vehiculo;
 
 public class ManipulacionDatos {
@@ -26,6 +28,7 @@ public class ManipulacionDatos {
 		con = conexion.getConnection();
 	}
 	
+// Ejercicio 1 -----------------------------------------------------------------------------------------------------------------------------------------	
 	public void insertarVehiculosPorFichero(String rutaFichero, String delimitador) {
 		try {
 			// Al usar "InputStreamReader" también tenemos la opción de leer un fichero igual que "FileReader". Lo bueno de este que usamos ahora
@@ -94,8 +97,8 @@ public class ManipulacionDatos {
 			rs = stmt.executeQuery();
 
 			while (rs.next()) { // devuelve una linea de la consulta, es decir, una fila de la tabla
-				Vehiculo vehiculo = new Vehiculo(rs.getInt("codigo"), rs.getString("matricula"), rs.getString("fecha"), rs.getString("estado").charAt(0), rs.getInt("precio"), 
-						rs.getString("nif"));
+				Vehiculo vehiculo = new Vehiculo(rs.getInt("codigo"), rs.getString("matricula"), rs.getString("fecha"), rs.getString("estado").charAt(0),
+						rs.getFloat("precio"), rs.getString("nif"));
 	
 				if (!vehiculosPorNif.containsKey(vehiculo.getNifPropietario())) {
 					ArrayList<Vehiculo> listaVehiculos = new ArrayList<Vehiculo>();
@@ -142,9 +145,93 @@ public class ManipulacionDatos {
 			}
 		}
 		
-		System.out.println("\nTotal -->\t" + acumuladorTotal + "€");
-
+		System.out.println("\nTotal -->\t" + acumuladorTotal + "€");	
+	}
+	
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------	
+	
+// Ejercicio 2 ---------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	public HashMap <Integer, Cuenta> mapaCuentas (){
+		HashMap <Integer, Cuenta> mapaCuentas = new HashMap <Integer, Cuenta>();
 		
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			stmt = con.prepareStatement("select * from cuentas;");
+			rs = stmt.executeQuery();
+
+			while (rs.next()) { // devuelve una linea de la consulta, es decir, una fila de la tabla
+				Cuenta cuenta = new Cuenta(rs.getInt("id"), rs.getString("descripcion"), rs.getFloat("saldo"));
+	
+				mapaCuentas.put(cuenta.getId(), cuenta);
+			}
+
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Te quedas con las ganas");
+		} catch (NullPointerException e) {
+			System.out.println("Va a ser que no");
+		}
+		
+		return mapaCuentas;
 		
 	}
+	
+	public HashMap <Cuenta, ArrayList<Movimiento>> mapaMovimientos (HashMap <Integer, Cuenta> mapaCuentas){
+		HashMap <Cuenta, ArrayList<Movimiento>> cuentasConMovs = new HashMap <Cuenta, ArrayList<Movimiento>>();
+		
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			
+			stmt = con.prepareStatement("select * from movs;");
+
+			rs = stmt.executeQuery();
+			while (rs.next()) { // devuelve una linea de la consulta, es decir, una fila de la tabla
+				Movimiento movimiento = new Movimiento(rs.getInt("id"), rs.getInt("idCta"), rs.getString("fecha"), 
+						rs.getString("descripcion"), rs.getFloat("importe"));
+	
+				// Recorreremos nuestro mapa de cuentas para comprobar si ya está una cuenta incluida en nuestro no mapa de movimientos
+				Set<Integer> clavesMapa = mapaCuentas.keySet();
+				
+				for (Integer claves: clavesMapa) {
+					// Si la id del cuenta que hay en el movimiento es la misma id que de la cuenta del mapaCuenta que se está evaluando, entrará entonces en el if
+					if (movimiento.getIdCta() == mapaCuentas.get(claves).getId()) {
+						
+						// Si el mapa de cuentasConMovs no contiene como clave la cuenta que estamos evaluando, lo añade como clave y como valor una nueva lista de movimientos
+						if (!cuentasConMovs.containsKey(mapaCuentas.get(claves))) {
+							ArrayList<Movimiento> listaMovimiento = new ArrayList<Movimiento>();
+							listaMovimiento.add(movimiento);
+							cuentasConMovs.put(mapaCuentas.get(claves), listaMovimiento);
+						} else {
+							cuentasConMovs.get(mapaCuentas.get(claves)).add(movimiento);
+						}
+						
+					}
+				}
+				
+			}
+
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Te quedas con las ganas");
+		} catch (NullPointerException e) {
+			System.out.println("Va a ser que no");
+		}
+		
+		return cuentasConMovs;
+		
+	}
+	
+	
+	
 }
