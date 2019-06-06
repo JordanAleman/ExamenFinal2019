@@ -1,10 +1,9 @@
 package control;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,10 +28,7 @@ public class ManipulacionDatos {
 // Ejercicio 1 -----------------------------------------------------------------------------------------------------------------------------------------	
 	public void insertarVehiculosPorFichero(String rutaFichero, String delimitador) {
 		try {
-			// Al usar "InputStreamReader" también tenemos la opción de leer un fichero igual que "FileReader". Lo bueno de este que usamos ahora
-			// es que podemos pasar por parámetro por medio de "FileInputStream" una ruta de fichero y su codificación.
-			// Al ponerle codificación "utf-8" se puede conseguir leer tildes y 'ñ', entre otros caracteres.
-			BufferedReader fichero = new BufferedReader(new InputStreamReader(new FileInputStream(rutaFichero), "utf-8"));
+			BufferedReader fichero = new BufferedReader(new FileReader(rutaFichero));
 			String registro;
 			PreparedStatement stmt = null;
 			int contador = 0;
@@ -42,7 +38,7 @@ public class ManipulacionDatos {
 					// Romper la cadena registro
 					String[] campos = registro.split(delimitador);
 					
-					stmt = con.prepareStatement("insert into vehiculo (codigo, matricula, fecha, estado, precio, nif) values (?,?,?,?,?,?)");
+					stmt = con.prepareStatement("insert into vehiculos (codigo, matricula, fecha, estado, precio, nif) values (?,?,?,?,?,?)");
 
 					stmt.setInt(1, Integer.parseInt(campos[0]));		
 					stmt.setString(2, campos[1]);

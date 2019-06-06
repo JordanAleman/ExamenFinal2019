@@ -12,14 +12,14 @@ public class Main {
 	public static void main(String[] args) {
 
 		
-//		new ManipulacionDatos().insertarVehiculosPorFichero("ficheros/vehiculos.csv","&&");
+		new ManipulacionDatos().insertarVehiculosPorFichero("ficheros/vehiculos.txt","&&");
 
 //		HashMap <String, ArrayList<Vehiculo>> vehiculosPorNif = new ManipulacionDatos().mapaVehiculos();
 //		new ManipulacionDatos().muestraListaVehiculosPorPropietarios(vehiculosPorNif);
-		
-		HashMap <Integer, Cuenta> mapaCuentas = new ManipulacionDatos().mapaCuentas();
-		HashMap <Cuenta, ArrayList<Movimiento>> cuentasConMovs = new ManipulacionDatos().mapaMovimientos(mapaCuentas);
-		new ManipulacionDatos().muestraMovimientos(mapaCuentas, cuentasConMovs);
+//		
+//		HashMap <Integer, Cuenta> mapaCuentas = new ManipulacionDatos().mapaCuentas();
+//		HashMap <Cuenta, ArrayList<Movimiento>> cuentasConMovs = new ManipulacionDatos().mapaMovimientos(mapaCuentas);
+//		new ManipulacionDatos().muestraMovimientos(mapaCuentas, cuentasConMovs);
 	}
 	
 }
