@@ -130,8 +130,8 @@ public class ManipulacionDatos {
 			contador++;
 			for (int i = 0; i < mapaVehiculos.get(claves).size(); i++) {
 				System.out.println("Nif: [" + mapaVehiculos.get(claves).get(i).getNifPropietario() + "] \tMatrícula: [" 
-			+ mapaVehiculos.get(claves).get(i).getMatricula() + "] \tPrecio: [" + mapaVehiculos.get(claves).get(i).getPrecio() + "€]");
-				acumuladorSubTotal += mapaVehiculos.get(claves).get(i).getPrecio();
+						+ mapaVehiculos.get(claves).get(i).getMatricula() + "] \tPrecio: [" + mapaVehiculos.get(claves).get(i).getPrecio() + "€]");
+						acumuladorSubTotal += mapaVehiculos.get(claves).get(i).getPrecio();
 				
 				if (i == mapaVehiculos.get(claves).size() - 1) {
 					System.out.println("Subtotal de [" + mapaVehiculos.get(claves).get(i).getNifPropietario() + "] --> \t" + acumuladorSubTotal + "€");

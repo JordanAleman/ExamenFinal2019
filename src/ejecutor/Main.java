@@ -13,9 +13,9 @@ public class Main {
 
 		
 		// Este comando es para insertar los datos en la base de datos. Una vez insertado se comenta para que no de problemas
-		new ManipulacionDatos().insertarVehiculosPorFichero("ficheros/vehiculos.csv","&&");
+//		new ManipulacionDatos().insertarVehiculosPorFichero("ficheros/vehiculos.csv","&&");
 
-		HashMap <String, ArrayList<Vehiculo>> vehiculosPorNif = new ManipulacionDatos().mapaVehiculos();
+		HashMap<String, ArrayList<Vehiculo>> vehiculosPorNif = new ManipulacionDatos().mapaVehiculos();
 		new ManipulacionDatos().muestraListaVehiculosPorPropietarios(vehiculosPorNif);
 		
 		HashMap <Integer, Cuenta> mapaCuentas = new ManipulacionDatos().mapaCuentas();
