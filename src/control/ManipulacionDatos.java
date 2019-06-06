@@ -9,10 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Set;
 
 import modelo.Cuenta;
@@ -189,8 +187,6 @@ public class ManipulacionDatos {
 		ResultSet rs = null;
 		
 		try {
-
-			
 			stmt = con.prepareStatement("select * from movs;");
 
 			rs = stmt.executeQuery();
@@ -232,6 +228,39 @@ public class ManipulacionDatos {
 		
 	}
 	
+	public void muestraMovimientos(HashMap <Integer, Cuenta> mapaCuentas, HashMap <Cuenta, ArrayList<Movimiento>> mapaMovimientos) {
+		float acumulador;
+		
+		Set<Integer> clavesMapaCuenta = mapaCuentas.keySet();
+		Set<Cuenta> clavesMapaMovs = mapaMovimientos.keySet();
+		System.out.println("\nListado de movimientos de cuentas:");
+		
+		// En este primer for recorreremos el mapa de cuentas para obtener la información sobre su descripión y saldo inicial.
+		for (Integer clavesCuenta : clavesMapaCuenta) {
+			System.out.println("-------------------------------------------------------------");
+			System.out.println("\nCuenta: [" + mapaCuentas.get(clavesCuenta).getCuenta() + "] \nSaldo Inicial: [" + mapaCuentas.get(clavesCuenta).getSaldo() + "]");
+			
+			
+			for (Cuenta clavesMovs : clavesMapaMovs) {
+				
+				// Recorremos el mapa de movimientos y evaluaremos los movimientos de la cuenta que estamos evaluando actualmente
+				if (clavesCuenta == clavesMovs.getId()) {
+					System.out.println("Movimientos:");
+					acumulador = mapaCuentas.get(clavesCuenta).getSaldo();
+					for (int i = 0; i < mapaMovimientos.get(clavesMovs).size(); i++) {
+						System.out.println("\t\t" + mapaMovimientos.get(clavesMovs).get(i).getImporte());
+						acumulador += mapaMovimientos.get(clavesMovs).get(i).getImporte();
+						
+					}
+					System.out.println("Saldo final: \t[" + acumulador + "€]");
+				}
+				
+			}
+				
+				
+		}
+
 	
+	}
 	
 }

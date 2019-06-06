@@ -19,7 +19,7 @@ public class Main {
 		
 		HashMap <Integer, Cuenta> mapaCuentas = new ManipulacionDatos().mapaCuentas();
 		HashMap <Cuenta, ArrayList<Movimiento>> cuentasConMovs = new ManipulacionDatos().mapaMovimientos(mapaCuentas);
-
+		new ManipulacionDatos().muestraMovimientos(mapaCuentas, cuentasConMovs);
 	}
 	
 }
