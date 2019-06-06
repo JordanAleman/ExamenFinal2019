@@ -59,7 +59,7 @@ public class ManipulacionDatos {
 					
 				}
 				con.close();
-				System.out.println("Tododos los elementos de vehículos han sido insertados correctamente");
+				System.out.println("Todos los elementos de vehículos han sido insertados correctamente\n");
 
 			} catch (SQLException ex) {
 				// En el caso de que se produzca algún error al ejecutar la sentencia SQL, nos aparecerá por pantalla de esta misma consola el siguiente mensaje de error.
@@ -123,7 +123,8 @@ public class ManipulacionDatos {
 		
 		Set<String> clavesMapa = mapaVehiculos.keySet();
 		
-		System.out.println("Listado vehículos por cada propietario");
+		System.out.println("\n*******************************************************************************************************************");
+		System.out.println("\nListado vehículos por cada propietario");
 		for (String claves : clavesMapa) {
 			System.out.println("\nPropietario " + contador);
 			contador++;
@@ -229,18 +230,18 @@ public class ManipulacionDatos {
 		
 		Set<Integer> clavesMapaCuenta = mapaCuentas.keySet();
 		Set<Cuenta> clavesMapaMovs = mapaMovimientos.keySet();
+		System.out.println("\n*******************************************************************************************************************");
 		System.out.println("\nListado de movimientos de cuentas:");
 		
 		// En este primer for recorreremos el mapa de cuentas para obtener la información sobre su descripión y saldo inicial.
-		for (Integer clavesCuenta : clavesMapaCuenta) {
-			System.out.println("-------------------------------------------------------------");
-			System.out.println("\nCuenta: [" + mapaCuentas.get(clavesCuenta).getCuenta() + "] \nSaldo Inicial: [" + mapaCuentas.get(clavesCuenta).getSaldo() + "]");
-			
-			
+		for (Integer clavesCuenta : clavesMapaCuenta) {		
 			for (Cuenta clavesMovs : clavesMapaMovs) {
 				
 				// Recorremos el mapa de movimientos y evaluaremos los movimientos de la cuenta que estamos evaluando actualmente
 				if (clavesCuenta == clavesMovs.getId()) {
+					System.out.println("-------------------------------------------------------------");
+					System.out.println("\nCuenta: [" + mapaCuentas.get(clavesCuenta).getCuenta() + "] \nSaldo Inicial: [" + mapaCuentas.get(clavesCuenta).getSaldo() + "]");
+
 					System.out.println("Movimientos:");
 					acumulador = mapaCuentas.get(clavesCuenta).getSaldo();
 					for (int i = 0; i < mapaMovimientos.get(clavesMovs).size(); i++) {
@@ -249,10 +250,8 @@ public class ManipulacionDatos {
 						
 					}
 					System.out.println("Saldo final: \t[" + acumulador + "€]");
-				}
-				
-			}
-				
+				} 	
+			}		
 				
 		}
 

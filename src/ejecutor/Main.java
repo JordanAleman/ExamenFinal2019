@@ -12,14 +12,15 @@ public class Main {
 	public static void main(String[] args) {
 
 		
-		new ManipulacionDatos().insertarVehiculosPorFichero("ficheros/vehiculos.txt","&&");
+		// Este comando es para insertar los datos en la base de datos. Una vez insertado se comenta para que no de problemas
+		new ManipulacionDatos().insertarVehiculosPorFichero("ficheros/vehiculos.csv","&&");
 
-//		HashMap <String, ArrayList<Vehiculo>> vehiculosPorNif = new ManipulacionDatos().mapaVehiculos();
-//		new ManipulacionDatos().muestraListaVehiculosPorPropietarios(vehiculosPorNif);
-//		
-//		HashMap <Integer, Cuenta> mapaCuentas = new ManipulacionDatos().mapaCuentas();
-//		HashMap <Cuenta, ArrayList<Movimiento>> cuentasConMovs = new ManipulacionDatos().mapaMovimientos(mapaCuentas);
-//		new ManipulacionDatos().muestraMovimientos(mapaCuentas, cuentasConMovs);
+		HashMap <String, ArrayList<Vehiculo>> vehiculosPorNif = new ManipulacionDatos().mapaVehiculos();
+		new ManipulacionDatos().muestraListaVehiculosPorPropietarios(vehiculosPorNif);
+		
+		HashMap <Integer, Cuenta> mapaCuentas = new ManipulacionDatos().mapaCuentas();
+		HashMap <Cuenta, ArrayList<Movimiento>> cuentasConMovs = new ManipulacionDatos().mapaMovimientos(mapaCuentas);
+		new ManipulacionDatos().muestraMovimientos(mapaCuentas, cuentasConMovs);
 	}
 	
 }
