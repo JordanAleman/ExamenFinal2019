@@ -117,8 +117,8 @@ public class ManipulacionDatos {
 	}
 	
 	public void muestraListaVehiculosPorPropietarios(HashMap <String, ArrayList<Vehiculo>> mapaVehiculos) {
-		float acumuladorSubTotal = 0.0f;
-		float acumuladorTotal = 0.0f;
+		float acumuladorSubTotal;
+		float acumuladorTotal = 0;
 		int contador = 1;
 		
 		Set<String> clavesMapa = mapaVehiculos.keySet();
@@ -126,6 +126,7 @@ public class ManipulacionDatos {
 		System.out.println("\n*******************************************************************************************************************");
 		System.out.println("\nListado vehículos por cada propietario");
 		for (String claves : clavesMapa) {
+			acumuladorSubTotal = 0; 
 			System.out.println("\nPropietario " + contador);
 			contador++;
 			for (int i = 0; i < mapaVehiculos.get(claves).size(); i++) {
